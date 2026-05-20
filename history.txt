@@ -1,0 +1,5 @@
+Result of 234+2345 = 2579
+Result of 1324-341 = 983
+Result of 4355x45 = 195975
+Result of 54325/10 = 5432.5
+Result of 34+32 = 66
