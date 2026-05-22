@@ -4,23 +4,20 @@ from history import read_history,save_history,clear_history
 
 #MENU SYSTEM
 def show_menu():
-    print("======CALCULATOR======")
     print()
     print("Press 1 for Addition")
     print("Press 2 for subtraction")
     print("Press 3 for multiplaction")
     print("Press 4 for division")
-    print("Press 5 to show history")
-    print("Press 6 to clear history")
+    print("Press '=' for Answer")
     print()
 
-def performe_operation():
-    operation=operations[n]
-    result=operation()
-    result_history=f"Result is = {result}"
-    history.append(result_history)
-    save_history(result_history)
-    print(f"Result is -> {result}")
+def show_setting():
+    print("Press 1 to show history")
+    print("Press 2 to clear history")
+    print("Press 3 to exit")
+    print("Press any other key for another calculation")
+    print()
 
 def special_operations():
     if n==5:
@@ -29,41 +26,72 @@ def special_operations():
         clear_history()
         print("History Cleared")
 
-history=[]
-while True:
-    show_menu()
 
-    #TAKING OPEARTION
-    #WITH EXCEPTION HANDLING
-    try:
-        n=int(input("-->"))
-    except ValueError:
-        print("Enter number only")
-    print()
+history=""
+while True:
 
     #FUNCTION DISPATCHING
     operations={
-        1:add,
-        2:subtact,
-        3:multiply,
-        4:divide,
+        "1":add,
+        "2":subtact,
+        "3":multiply,
+        "4":divide,
     }
     #FUNCTION SYMBOLE
     operations_symbol={
-        1:"+",
-        2:"-",
-        3:"x",
-        4:"/"
+        "1":"+",
+        "2":"-",
+        "3":"x",
+        "4":"/"
     }
 
-    #MATH OPERATIONS
-    if n in operations:
-        performe_operation()
+    #PERFORMING OPEARTION
+    #WITH EXCEPTION HANDLING 
+    num1=get_number()
+    while True:
+        if history =="":
+            show_menu()
+            n=input("Your choice --> ")
+            if n=="=":
+                print(num1)
+                history(num1)
+                break
+            else:
+                num2=get_number()
+                try:
+                    operation=operations[n]
+                    result=operation(num1,num2)
+                    history=f"{num1} {operations_symbol[n]} {num2}"
+                except Exception:
+                    print("Please enter number between 1 to 4 or press '=' omly ")
+                
+        else:
+            show_menu()
+            x=input("Your choice --> ")
+            if x=="=":
+                history=history+f" = {result}"
+                print(result)
+                save_history(history)
+                break
+            else:
+                num_next=get_number()
+                try:
+                    operation=operations[n]
+                    new_result=operation(result,num_next)
+                    history=history+f" {operations_symbol[x]} {num_next}"
+                except Exception:
+                    print("Please enter number between 1 to 4 or press '=' omly ")
 
-    #SPECIAL OPERATIONS
-    special_operations()
-
-    #ASKING FOR MORE OR STOP
-    x=input("Do you want another calculation? (y/n): ")
-    if x=="n":
+    final_choice=""
+    while True:
+        show_setting()
+        setting_choice=input("Enter your choice ")
+        if setting_choice=="1":
+            print(read_history())
+        elif setting_choice=="2":
+            clear_history()
+        else:
+            final_choice+=setting_choice
+            break
+    if final_choice=="3":
         break

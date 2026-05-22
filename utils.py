@@ -1,4 +1,8 @@
 def get_number():
-    n=input("Enter number and press '=' for Answer: ")
-    return n
+    while True:
+        try:
+            n=int(input("Enter number : "))
+            return n
+        except ValueError:
+            print("Enter number only ")
 
