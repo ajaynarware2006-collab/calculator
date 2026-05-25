@@ -13,6 +13,7 @@ def show_menu():
     print()
 
 def show_setting():
+    print()
     print("Press 1 to show history")
     print("Press 2 to clear history")
     print("Press 3 to exit")
@@ -47,40 +48,54 @@ while True:
 
     #PERFORMING OPEARTION
     #WITH EXCEPTION HANDLING 
+    print("=====CALCULATOR====")
+    print()
     num1=get_number()
     while True:
         if history =="":
             show_menu()
             n=input("Your choice --> ")
             if n=="=":
-                print(num1)
+                print()
+                print(f"Answer is {num1}")
                 history(num1)
                 break
+
+            elif int(n)>4 or int(n)<1:
+                print()
+                print("Please enter number between 1 to 4 or press '=' omly ")
+
             else:
-                num2=get_number()
                 try:
+                    num2=get_number()
                     operation=operations[n]
                     result=operation(num1,num2)
                     history=f"{num1} {operations_symbol[n]} {num2}"
-                except Exception:
-                    print("Please enter number between 1 to 4 or press '=' omly ")
-                
+                except KeyError:
+                    print("Please enter valid key")
         else:
             show_menu()
             x=input("Your choice --> ")
             if x=="=":
                 history=history+f" = {result}"
-                print(result)
+                print()
+                print(f"Answer is {result}")
                 save_history(history)
                 break
+
+            elif int(x)>4 or int(x)<1:
+                print()
+                print("Please enter number between 1 to 4 or press '=' omly ")
+
             else:
-                num_next=get_number()
                 try:
+                    num_next=get_number()
                     operation=operations[n]
                     new_result=operation(result,num_next)
                     history=history+f" {operations_symbol[x]} {num_next}"
-                except Exception:
-                    print("Please enter number between 1 to 4 or press '=' omly ")
+                except KeyError:
+                    print()
+                    print("Please enter valid choice ")
 
     final_choice=""
     while True:
